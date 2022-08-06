@@ -19,7 +19,6 @@ somesh@k8s-ha-master1:~$ LOADBALANCER_ADDRESS=192.168.1.18
 Generate a kubeconfig file for the `kube-proxy` service:
 
 ```
-somesh@k8s-ha-master1:~$
 {
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.crt \
@@ -55,7 +54,6 @@ Reference docs for kube-proxy [here](https://kubernetes.io/docs/reference/comman
 Generate a kubeconfig file for the `kube-controller-manager` service:
 
 ```
-somesh@k8s-ha-master1:~$
 {
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.crt \
@@ -91,7 +89,6 @@ Reference docs for kube-controller-manager [here](https://kubernetes.io/docs/ref
 Generate a kubeconfig file for the `kube-scheduler` service:
 
 ```
-somesh@k8s-ha-master1:~$
 {
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.crt \
@@ -127,7 +124,6 @@ Reference docs for kube-scheduler [here](https://kubernetes.io/docs/reference/co
 Generate a kubeconfig file for the `admin` user:
 
 ```
-somesh@k8s-ha-master1:~$
 {
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.crt \
