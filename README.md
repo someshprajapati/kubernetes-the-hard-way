@@ -1,7 +1,8 @@
 > This tutorial is a modified version of the original developed by [Kelsey Hightower](https://github.com/kelseyhightower/kubernetes-the-hard-way).
+
 > The results of this tutorial should not be viewed as production ready.
 
-# Kubernetes The Hard Way On VirtualBox
+# Kubernetes The Hard Way On VMware Fusion
 
 This tutorial walks you through setting up Kubernetes the hard way on a local machine using VirtualBox.
 This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster.
