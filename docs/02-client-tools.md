@@ -174,3 +174,5 @@ Server: Docker Engine - Community
   Version:          0.19.0
   GitCommit:        de40ad0
 ```
+
+Next: [Compute Resources](03-compute-resources.md)

@@ -14,3 +14,5 @@ Download and Install [VMware Fusion](https://www.vmware.com/in/products/fusion/f
  - Linux distributions
 
 Once VMware Fusion is installed you may choose to deploy virtual machines manually on it.
+
+Next: [Client Tools](02-client-tools.md)
