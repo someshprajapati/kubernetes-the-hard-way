@@ -239,7 +239,7 @@ service-account.crt
 Copy the appropriate certificates and private keys to each controller instance:
 
 ```
-somesh@k8s-ha-master1:~$ for instance in master-1 master-2; do
+somesh@k8s-ha-master1:~$ for instance in master2; do
   scp ca.crt ca.key kube-apiserver.key kube-apiserver.crt \
     service-account.key service-account.crt \
     etcd-server.key etcd-server.crt \
