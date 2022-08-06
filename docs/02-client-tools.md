@@ -1,118 +1,176 @@
-# Installing the Client Tools
+# Provisioning Compute Resources
 
-In this lab you will install the command line utilities required to complete this tutorial: [cfssl](https://github.com/cloudflare/cfssl), [cfssljson](https://github.com/cloudflare/cfssl), and [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
+Note: You must have VMware Fusion configured at this point.
 
-
-## Install CFSSL
-
-The `cfssl` and `cfssljson` command line utilities will be used to provision a [PKI Infrastructure](https://en.wikipedia.org/wiki/Public_key_infrastructure) and generate TLS certificates.
-
-Download and install `cfssl` and `cfssljson`:
-
-### OS X
+We are going to deploy the below set of servers on VMware Fusion. Using the below OS for the setup.
 
 ```
-curl -o cfssl https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/darwin/cfssl
-curl -o cfssljson https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/darwin/cfssljson
+NAME="Ubuntu"
+VERSION="20.04.4 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.4 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
 ```
 
+- Deploy 5 VMs --> 2 Master, 2 Worker and 1 Loadbalancer with the name 'k8s-ha-*'
+
+- Set's IP addresses in the range 192.168.1
+
+    |      VM      |     VM Name     |     Purpose   |     IP       |  Forwarded Port  |
+    | ------------ | --------------- | ------------- | ------------ | ---------------- |
+    | master1      | k8s-ha-master1  | Master        | 192.168.1.14 |     2711         |
+    | master2      | k8s-ha-master2  | Master        | 192.168.1.15 |     2712         |
+    | worker1      | k8s-ha-worker1  | Worker        | 192.168.1.16 |     2721         |
+    | worker2      | k8s-ha-worker2  | Worker        | 192.168.1.17 |     2722         |
+    | loadbalancer | k8s-ha-lb       | LoadBalancer  | 192.168.1.18 |     2730         |
+
+
+- Add's a DNS entry to each of the nodes to access internet
+    > DNS: 8.8.8.8
+
+- Install's Docker on Worker nodes
+- Runs the below command on all nodes to allow for network forwarding in IP Tables.
+  This is required for kubernetes networking to function correctly.
+    > sysctl net.bridge.bridge-nf-call-iptables=1
+
+
+## SSH Using SSH Client Tools
+
+I am using my favourite SSH Terminal tool (iTerm).
+
+**Private Key Path:** `~/.ssh/id_rsa`
+
+**Username:** `someshp`
+
+## Verify Environment
+
+- Ensure all VMs are up
+- Ensure VMs are assigned the above IP addresses
+
+> master1
 ```
-chmod +x cfssl cfssljson
+somesh@k8s-ha-master1:~$ hostname
+k8s-ha-master1
+
+somesh@k8s-ha-master1:~$ ifconfig | grep -w inet
+        inet 192.168.1.14  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet 127.0.0.1  netmask 255.0.0.0
 ```
 
+> master2
 ```
-sudo mv cfssl cfssljson /usr/local/bin/
+somesh@k8s-ha-master2:~$ hostname
+k8s-ha-master2
+
+somesh@k8s-ha-master2:~$ ifconfig | grep -w inet
+        inet 192.168.1.15  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet 127.0.0.1  netmask 255.0.0.0
 ```
 
-Some OS X users may experience problems using the pre-built binaries in which case [Homebrew](https://brew.sh) might be a better option:
-
+> worker1
 ```
-brew install cfssl
-```
+somesh@k8s-ha-worker1:~$ hostname
+k8s-ha-worker1
 
-### Linux
-
-```
-wget -q --show-progress --https-only --timestamping \
-  https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssl \
-  https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssljson
+somesh@k8s-ha-worker1:~$ ifconfig | grep -w inet
+        inet 192.168.1.16  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet 127.0.0.1  netmask 255.0.0.0
 ```
 
+> worker2
 ```
-chmod +x cfssl cfssljson
+somesh@k8s-ha-worker2:~$ hostname
+k8s-ha-worker2
+
+somesh@k8s-ha-worker2:~$ ifconfig | grep -w inet
+        inet 192.168.1.17  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet 127.0.0.1  netmask 255.0.0.0
 ```
 
+> loadbalancer
 ```
-sudo mv cfssl cfssljson /usr/local/bin/
+somesh@k8s-ha-lb:~$ hostname
+k8s-ha-lb
+
+somesh@k8s-ha-lb:~$ ifconfig | grep -w inet
+        inet 192.168.1.18  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet 127.0.0.1  netmask 255.0.0.0
 ```
 
-### Verification
+- Ensure you can SSH into these VMs using the IP and private keys
+- Ensure the VMs can ping each other
+- Ensure the worker nodes have Docker installed on them [Install Docker](https://docs.docker.com/engine/install/ubuntu/). Version: 20.10
+  > command `sudo docker version`
 
-Verify `cfssl` and `cfssljson` version 1.4.1 or higher is installed:
+> worker1
+```
+somesh@k8s-ha-worker1:~$ sudo docker version
+Client: Docker Engine - Community
+ Version:           20.10.17
+ API version:       1.41
+ Go version:        go1.17.11
+ Git commit:        100c701
+ Built:             Mon Jun  6 23:02:57 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
 
-```
-cfssl version
-```
-
-> output
-
-```
-Version: 1.4.1
-Runtime: go1.12.12
-```
-
-```
-cfssljson --version
-```
-```
-Version: 1.4.1
-Runtime: go1.12.12
-```
-
-## Install kubectl
-
-The `kubectl` command line utility is used to interact with the Kubernetes API Server. Download and install `kubectl` from the official release binaries:
-
-### OS X
-
-```
-curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/darwin/amd64/kubectl
-```
-
-```
-chmod +x kubectl
-```
-
-```
-sudo mv kubectl /usr/local/bin/
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.17
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.17.11
+  Git commit:       a89b842
+  Built:            Mon Jun  6 23:01:03 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.6
+  GitCommit:        10c12954828e7c7c9b6e0ea9b0c02b01407d3ae1
+ runc:
+  Version:          1.1.2
+  GitCommit:        v1.1.2-0-ga916309
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
 ```
 
-### Linux
+> worker2
+```
+somesh@k8s-ha-worker2:~$ sudo docker version
+Client: Docker Engine - Community
+ Version:           20.10.17
+ API version:       1.41
+ Go version:        go1.17.11
+ Git commit:        100c701
+ Built:             Mon Jun  6 23:02:57 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
 
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.17
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.17.11
+  Git commit:       a89b842
+  Built:            Mon Jun  6 23:01:03 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.6
+  GitCommit:        10c12954828e7c7c9b6e0ea9b0c02b01407d3ae1
+ runc:
+  Version:          1.1.2
+  GitCommit:        v1.1.2-0-ga916309
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
 ```
-wget https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
-```
-
-```
-chmod +x kubectl
-```
-
-```
-sudo mv kubectl /usr/local/bin/
-```
-
-### Verification
-
-Verify `kubectl` version 1.21.0 or higher is installed:
-
-```
-kubectl version --client
-```
-
-> output
-
-```
-Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.0", GitCommit:"cb303e613a121a29364f75cc67d3d580833a7479", GitTreeState:"clean", BuildDate:"2021-04-08T16:31:21Z", GoVersion:"go1.16.1", Compiler:"gc", Platform:"linux/amd64"}
-```
-
-Next: [Provisioning Compute Resources](03-compute-resources.md)
