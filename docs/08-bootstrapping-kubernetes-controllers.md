@@ -280,4 +280,4 @@ S😎MESH~[kubernetes-the-hard-way (master)]~✅ curl  https://192.168.1.18:6443
 }
 ```
 
-Next: [Bootstrapping the Kubernetes Worker Nodes](09-bootstrapping-kubernetes-worker-1.md)
+Next: [Bootstrapping the Kubernetes Worker1 Nodes](09-bootstrapping-kubernetes-worker-1.md)

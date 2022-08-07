@@ -264,4 +264,4 @@ k8s-ha-worker1   NotReady   <none>   3m50s   v1.13.0
 
 Optional: At this point you may run the certificate verification script to make sure all certificates are configured correctly. Follow the instructions [here](verify-certificates.md)
 
-Next: [TLS Bootstrapping Kubernetes Workers](09-bootstrapping-kubernetes-worker-2.md)
+Next: [Bootstrapping the Kubernetes Worker2 Nodes](09-bootstrapping-kubernetes-worker-2.md)
