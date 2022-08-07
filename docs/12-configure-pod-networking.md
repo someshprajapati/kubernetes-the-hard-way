@@ -27,15 +27,29 @@ Weave uses POD CIDR of `10.32.0.0/12` by default.
 List the registered Kubernetes nodes from the master node:
 
 ```
-somesh@k8s-ha-master1:~$ kubectl get pods -n kube-system
+kubectl get nodes
+kubectl get pods -n kube-system
+kubectl get pods -n kube-system -o wide
+kubectl logs weave-net-r2jsb weave -n kube-system
 ```
 
 > output
 
 ```
+somesh@k8s-ha-master1:~$ kubectl get nodes
+NAME             STATUS   ROLES    AGE    VERSION
+k8s-ha-worker1   Ready    <none>   141m   v1.13.0
+
 somesh@k8s-ha-master1:~$ kubectl get pods -n kube-system
 NAME              READY   STATUS    RESTARTS   AGE
 weave-net-r2jsb   2/2     Running   1          5m14s
+
+somesh@k8s-ha-master1:~$ kubectl get pods -n kube-system -o wide
+NAME              READY   STATUS    RESTARTS   AGE     IP             NODE             NOMINATED NODE   READINESS GATES
+weave-net-r2jsb   2/2     Running   1          9m20s   192.168.1.16   k8s-ha-worker1   <none>           <none>
+
+somesh@k8s-ha-master1:~$ kubectl logs weave-net-r2jsb weave -n kube-system
+Error from server (Forbidden): Forbidden (user=kube-apiserver, verb=get, resource=nodes, subresource=proxy) ( pods/log weave-net-r2jsb)
 ```
 
 Reference: https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/weave-network-policy/#install-the-weave-net-addon
