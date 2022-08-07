@@ -39,6 +39,9 @@ INTERNAL_IP=$(ip addr show ens33 | grep "inet " | awk '{print $2}' | cut -d / -f
 ```
 somesh@k8s-ha-master1:~$ echo $INTERNAL_IP
 192.168.1.14
+
+somesh@k8s-ha-master2:~$ echo $INTERNAL_IP
+192.168.1.15
 ```
 
 Each etcd member must have a unique name within an etcd cluster. Set the etcd name to match the hostname of the current compute instance:
@@ -50,6 +53,9 @@ ETCD_NAME=$(hostname -s)
 ```
 somesh@k8s-ha-master1:~$ echo $ETCD_NAME
 k8s-ha-master1
+
+somesh@k8s-ha-master2:~$ echo $ETCD_NAME
+k8s-ha-master2
 ```
 
 Create the `etcd.service` systemd unit file:
