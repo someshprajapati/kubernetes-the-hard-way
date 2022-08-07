@@ -15,14 +15,14 @@ View the generated public key ID at:
 
 ```
 somesh@k8s-ha-master1:~$ cat ~/.ssh/id_rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtQ...skLUPwCb/46xXpbgO7IWuj4BR0lMxXTKZnc= somesh@server-1
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtQ...skLUPwCb/46xXpbgO7IWuj4BR0lMxXTKZnc= somesh@k8s-ha-master1
 ```
 
 Move public key of master to all other VMs
 
 ```
 somesh@k8s-ha-master1:~$ cat >> ~/.ssh/authorized_keys <<EOF
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtQ...skLUPwCb/46xXpbgO7IWuj4BR0lMxXTKZnc= somesh@server-1
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtQ...skLUPwCb/46xXpbgO7IWuj4BR0lMxXTKZnc= somesh@k8s-ha-master1
 EOF
 ```
 

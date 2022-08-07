@@ -23,7 +23,7 @@ UBUNTU_CODENAME=focal
 
 - Set's IP addresses in the range 192.168.1
 
-    |      VM      |     VM Name     |     Purpose   |     IP       |  Forwarded Port  |
+    |   VM Name    |   VM Hostname   |     Purpose   |     IP       |  Forwarded Port  |
     | ------------ | --------------- | ------------- | ------------ | ---------------- |
     | master1      | k8s-ha-master1  | Master        | 192.168.1.14 |     2711         |
     | master2      | k8s-ha-master2  | Master        | 192.168.1.15 |     2712         |
