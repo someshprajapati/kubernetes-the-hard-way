@@ -35,7 +35,7 @@ The instance internal IP address will be used to serve client requests and commu
 ```
 INTERNAL_IP=$(ip addr show ens33 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
 ```
-> output
+> Output:
 ```
 somesh@k8s-ha-master1:~$ echo $INTERNAL_IP
 192.168.1.14
@@ -49,7 +49,7 @@ Each etcd member must have a unique name within an etcd cluster. Set the etcd na
 ```
 ETCD_NAME=$(hostname -s)
 ```
-> output
+> Output:
 ```
 somesh@k8s-ha-master1:~$ echo $ETCD_NAME
 k8s-ha-master1
@@ -115,7 +115,7 @@ sudo ETCDCTL_API=3 etcdctl member list \
   --key=/etc/etcd/etcd-server.key
 ```
 
-> output
+> Output:
 ```
 21037dfe0c3d2ed6, started, k8s-ha-master1, https://192.168.1.14:2380, https://192.168.1.14:2379
 2b7bdc1302c23c55, started, k8s-ha-master2, https://192.168.1.15:2380, https://192.168.1.15:2379

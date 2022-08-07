@@ -29,7 +29,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" 
 # Self sign the csr using its own private key
 somesh@k8s-ha-master1:~$ openssl x509 -req -in ca.csr -signkey ca.key -CAcreateserial  -out ca.crt -days 1000
 ```
-Results:
+> Results:
 
 ```
 ca.crt
@@ -63,7 +63,7 @@ somesh@k8s-ha-master1:~$ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.ke
 
 Note that the admin user is part of the **system:masters** group. This is how we are able to perform any administrative operations on Kubernetes cluster using kubectl utility.
 
-Results:
+> Results:
 
 ```
 admin.key
@@ -87,7 +87,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key kube-controller-manager.key -subj
 somesh@k8s-ha-master1:~$ openssl x509 -req -in kube-controller-manager.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out kube-controller-manager.crt -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 kube-controller-manager.key
@@ -106,7 +106,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key kube-proxy.key -subj "/CN=system:
 somesh@k8s-ha-master1:~$ openssl x509 -req -in kube-proxy.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out kube-proxy.crt -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 kube-proxy.key
@@ -125,7 +125,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key kube-scheduler.key -subj "/CN=sys
 somesh@k8s-ha-master1:~$ openssl x509 -req -in kube-scheduler.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out kube-scheduler.crt -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 kube-scheduler.key
@@ -169,7 +169,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key kube-apiserver.key -subj "/CN=kub
 somesh@k8s-ha-master1:~$ openssl x509 -req -in kube-apiserver.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out kube-apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 kube-apiserver.crt
@@ -207,7 +207,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key etcd-server.key -subj "/CN=etcd-s
 somesh@k8s-ha-master1:~$ openssl x509 -req -in etcd-server.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out etcd-server.crt -extensions v3_req -extfile openssl-etcd.cnf -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 etcd-server.key
@@ -226,7 +226,7 @@ somesh@k8s-ha-master1:~$ openssl req -new -key service-account.key -subj "/CN=se
 somesh@k8s-ha-master1:~$ openssl x509 -req -in service-account.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out service-account.crt -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 service-account.key

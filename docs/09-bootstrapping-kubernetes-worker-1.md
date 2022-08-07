@@ -17,7 +17,7 @@ Kubernetes uses a [special-purpose authorization mode](https://kubernetes.io/doc
 
 Generate a certificate and private key for one worker node:
 
-On master1:
+> On master1:
 
 ```
 cat > openssl-k8s-ha-worker1.cnf <<EOF
@@ -39,7 +39,7 @@ openssl req -new -key k8s-ha-worker1.key -subj "/CN=system:node:k8s-ha-worker1/O
 openssl x509 -req -in k8s-ha-worker1.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out k8s-ha-worker1.crt -extensions v3_req -extfile openssl-k8s-ha-worker1.cnf -days 1000
 ```
 
-Results:
+> Results:
 
 ```
 k8s-ha-worker1.key
@@ -57,7 +57,7 @@ LOADBALANCER_ADDRESS=192.168.1.18
 
 Generate a kubeconfig file for the first worker node.
 
-On master1:
+> On master1:
 ```
 {
   kubectl config set-cluster kubernetes-the-hard-way \
@@ -81,14 +81,14 @@ On master1:
 }
 ```
 
-Results:
+> Results:
 
 ```
 k8s-ha-worker1.kubeconfig
 ```
 
 ### Copy certificates, private keys and kubeconfig files to the worker node:
-On master1:
+> On master1:
 ```
 somesh@k8s-ha-master1:~$ scp ca.crt k8s-ha-worker1.crt k8s-ha-worker1.key k8s-ha-worker1.kubeconfig k8s-ha-worker1:~/
 ```
@@ -97,7 +97,7 @@ somesh@k8s-ha-master1:~$ scp ca.crt k8s-ha-worker1.crt k8s-ha-worker1.key k8s-ha
 
 Going forward all activities are to be done on the `worker1` node.
 
-On worker1:
+> On worker1:
 ```
 somesh@k8s-ha-worker1:~$ wget -q --show-progress --https-only --timestamping \
   https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl \
@@ -129,7 +129,7 @@ Install the worker binaries:
 ```
 
 ### Configure the Kubelet
-On worker1:
+> On worker1:
 ```
 {
   sudo mv ${HOSTNAME}.key ${HOSTNAME}.crt /var/lib/kubelet/
@@ -192,7 +192,7 @@ EOF
 ```
 
 ### Configure the Kubernetes Proxy
-On worker1:
+> On worker1:
 ```
 somesh@k8s-ha-worker1:~$ sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 ```
@@ -230,7 +230,7 @@ EOF
 ```
 
 ### Start the Worker Services
-On worker1:
+> On worker1:
 ```
 {
   sudo systemctl daemon-reload
@@ -242,7 +242,7 @@ On worker1:
 > Remember to run the above commands on worker node: `worker1`
 
 ## Verification
-On master1:
+> On master1:
 
 List the registered Kubernetes nodes from the master node:
 
@@ -264,4 +264,4 @@ k8s-ha-worker1   NotReady   <none>   3m50s   v1.13.0
 
 Optional: At this point you may run the certificate verification script to make sure all certificates are configured correctly. Follow the instructions [here](verify-certificates.md)
 
-Next: [TLS Bootstrapping Kubernetes Workers](10-tls-bootstrapping-kubernetes-workers.md)
+Next: [TLS Bootstrapping Kubernetes Workers](09-bootstrapping-kubernetes-worker-2.md)

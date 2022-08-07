@@ -41,7 +41,7 @@ Generate a kubeconfig file for the `kube-proxy` service:
 }
 ```
 
-Results:
+> Results:
 
 ```
 kube-proxy.kubeconfig
@@ -76,7 +76,7 @@ Generate a kubeconfig file for the `kube-controller-manager` service:
 }
 ```
 
-Results:
+> Results:
 
 ```
 kube-controller-manager.kubeconfig
@@ -111,7 +111,7 @@ Generate a kubeconfig file for the `kube-scheduler` service:
 }
 ```
 
-Results:
+> Results:
 
 ```
 kube-scheduler.kubeconfig
@@ -146,7 +146,7 @@ Generate a kubeconfig file for the `admin` user:
 }
 ```
 
-Results:
+> Results:
 
 ```
 admin.kubeconfig

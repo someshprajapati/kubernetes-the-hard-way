@@ -56,7 +56,7 @@ The instance internal IP address will be used to advertise the API Server to mem
 INTERNAL_IP=$(ip addr show ens33 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
 ```
 
-> output
+> Output:
 
 ```
 somesh@k8s-ha-master1:~$ echo $INTERNAL_IP
@@ -201,7 +201,7 @@ EOF
 kubectl get componentstatuses --kubeconfig admin.kubeconfig
 ```
 
-> output
+> Output:
 ```
 somesh@k8s-ha-master1:~$ kubectl get componentstatuses --kubeconfig admin.kubeconfig
 NAME                 STATUS    MESSAGE             ERROR
@@ -263,7 +263,7 @@ Make a HTTP request for the Kubernetes version info:
 curl  https://192.168.1.18:6443/version -k
 ```
 
-> output
+> Output:
 
 ```
 S😎MESH~[kubernetes-the-hard-way (master)]~✅ curl  https://192.168.1.18:6443/version -k
@@ -280,4 +280,4 @@ S😎MESH~[kubernetes-the-hard-way (master)]~✅ curl  https://192.168.1.18:6443
 }
 ```
 
-Next: [Bootstrapping the Kubernetes Worker Nodes](09-bootstrapping-kubernetes-workers.md)
+Next: [Bootstrapping the Kubernetes Worker Nodes](09-bootstrapping-kubernetes-worker-1.md)
