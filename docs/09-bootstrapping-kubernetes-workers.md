@@ -248,6 +248,8 @@ List the registered Kubernetes nodes from the master node:
 
 ```
 somesh@k8s-ha-master1:~$ kubectl get nodes --kubeconfig admin.kubeconfig
+
+somesh@k8s-ha-master1:~$ kubectl get nodes
 ```
 
 > output
