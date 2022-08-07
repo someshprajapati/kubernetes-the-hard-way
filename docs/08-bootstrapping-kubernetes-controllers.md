@@ -266,7 +266,7 @@ curl  https://192.168.1.18:6443/version -k
 > output
 
 ```
-somesh@k8s-ha-lb:~$ curl  https://192.168.1.18:6443/version -k
+S😎MESH~[kubernetes-the-hard-way (master)]~✅ curl  https://192.168.1.18:6443/version -k
 {
   "major": "1",
   "minor": "13",
