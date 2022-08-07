@@ -62,6 +62,19 @@ k8s-ha-master1
 somesh@k8s-ha-master1:~$ ifconfig | grep -w inet
         inet 192.168.1.14  netmask 255.255.255.0  broadcast 192.168.1.255
         inet 127.0.0.1  netmask 255.0.0.0
+
+somesh@k8s-ha-master1:~$ cat /etc/hosts | grep -v "^f"
+127.0.0.1 localhost
+127.0.1.1 k8s-ha-master1
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+
+192.168.1.14 k8s-ha-master1
+192.168.1.15 k8s-ha-master2
+192.168.1.16 k8s-ha-worker1
+192.168.1.17 k8s-ha-worker2
+192.168.1.18 k8s-ha-lb
 ```
 
 > master2
@@ -72,6 +85,19 @@ k8s-ha-master2
 somesh@k8s-ha-master2:~$ ifconfig | grep -w inet
         inet 192.168.1.15  netmask 255.255.255.0  broadcast 192.168.1.255
         inet 127.0.0.1  netmask 255.0.0.0
+
+somesh@k8s-ha-master2:~$ cat /etc/hosts | grep -v "^f"
+127.0.0.1 localhost
+127.0.1.1 k8s-ha-master2
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+
+192.168.1.14 k8s-ha-master1
+192.168.1.15 k8s-ha-master2
+192.168.1.16 k8s-ha-worker1
+192.168.1.17 k8s-ha-worker2
+192.168.1.18 k8s-ha-lb
 ```
 
 > worker1
@@ -82,6 +108,19 @@ k8s-ha-worker1
 somesh@k8s-ha-worker1:~$ ifconfig | grep -w inet
         inet 192.168.1.16  netmask 255.255.255.0  broadcast 192.168.1.255
         inet 127.0.0.1  netmask 255.0.0.0
+
+somesh@k8s-ha-worker1:~$ cat /etc/hosts | grep -v "^f"
+127.0.0.1 localhost
+127.0.1.1 k8s-ha-worker1
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+
+192.168.1.14 k8s-ha-master1
+192.168.1.15 k8s-ha-master2
+192.168.1.16 k8s-ha-worker1
+192.168.1.17 k8s-ha-worker2
+192.168.1.18 k8s-ha-lb
 ```
 
 > worker2
@@ -92,6 +131,19 @@ k8s-ha-worker2
 somesh@k8s-ha-worker2:~$ ifconfig | grep -w inet
         inet 192.168.1.17  netmask 255.255.255.0  broadcast 192.168.1.255
         inet 127.0.0.1  netmask 255.0.0.0
+
+somesh@k8s-ha-worker2:~$ cat /etc/hosts | grep -v "^f"
+127.0.0.1 localhost
+127.0.1.1 k8s-ha-worker2
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+
+192.168.1.14 k8s-ha-master1
+192.168.1.15 k8s-ha-master2
+192.168.1.16 k8s-ha-worker1
+192.168.1.17 k8s-ha-worker2
+192.168.1.18 k8s-ha-lb
 ```
 
 > loadbalancer
@@ -102,6 +154,19 @@ k8s-ha-lb
 somesh@k8s-ha-lb:~$ ifconfig | grep -w inet
         inet 192.168.1.18  netmask 255.255.255.0  broadcast 192.168.1.255
         inet 127.0.0.1  netmask 255.0.0.0
+
+somesh@k8s-ha-lb:~$ cat /etc/hosts | grep -v "^f"
+127.0.0.1 localhost
+127.0.1.1 k8s-ha-lb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+
+192.168.1.14 k8s-ha-master1
+192.168.1.15 k8s-ha-master2
+192.168.1.16 k8s-ha-worker1
+192.168.1.17 k8s-ha-worker2
+192.168.1.18 k8s-ha-lb
 ```
 
 - Ensure you can SSH into these VMs using the IP and private keys
